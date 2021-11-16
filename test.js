@@ -1,57 +1,71 @@
-// function will return true if password passes, else false if not
-// original:          Password
-// lowercase version: password
-//
-// original:          PASSWORD
-// uppercase version: PASSWORD
 
-// function (argument){console.log("loook at these heckin concise functions")}
-// (argument) => {console.log("loook at these heckin concise functions")}
-function passVerifier(password) {
-  let numberFound = false;
-  password.split("").map((i) => {
-    if (!isNaN(i)) {
-      numberFound = true;
-    }
-  });
-  if (
-    password.length <= 8 ||
-    password.toUpperCase() === password ||
-    password.toLowerCase() === password ||
-    !numberFound
-  ) {
-    return false;
-  }
+
+//1. Any live cell with fewer than two live neighbours dies as if by under population.
+//2. Any live cell with more than three live neighbours dies, as if by overcrowding.
+//3. Any live cell with two or three live neighbours lives on to the next generation.
+//4. Any dead cell with exactly three live neighbours becomes a live cell.
+let cell1 ={
+  alive: true ,
+   neighbors: 3
+};
+let cell2 ={
+  alive: true , 
+  neighbors: 2
+};
+let cell3 ={
+  alive: false,
+   neighbors: 3
+};
+let cell4 ={
+  alive: true ,
+   neighbors: 3
+};
+let cell5 ={
+  alive: true , 
+  neighbors: 4
+};
+//let cell6={
+  //alive: true ,
+  // neighbors: 1
+//};
+
+
+
+
+function simulateGeneration(cell){
+  console.log(cell);
+  
+
+ if (cell.alive === false && cell.neighbors !==3){
+ return false;
+}
+if(cell.neighbors === 2 || cell.neighbors ===3){
   return true;
 }
+return false;
+}
 
-// anonymous functions VV
-
-// larger than 8 characters --- done
-// should not be null --- done
-// should have one uppercase ----- done
-// should have one lowercase ---- done
-// should have one number ----- done
-
-describe("Password verifier", () => {
-  it("is 8 characters, it fails", () => {
-    const result = passVerifier("abcdefgh");
-    expect(result).toBe(false);
-  });
-  it("is 9 characters, no numbers, it fails", () => {
-    const result = passVerifier("abcdefghj");
-    expect(result).toBe(false);
-  });
-  it("is 9 characters, has numbers, no uppercase, it fails", () => {
-    const result = passVerifier("abcdefghj0");
-    expect(result).toBe(false);
-  });
-  it("is 9 characters, has numbers, no lowercase, it fails", () => {
-    const result = passVerifier("ASDFGHJKL0");
-    expect(result).toBe(false);
-  });
-  it("is 9 characters, has numbers, has upper, has lower, it pass", () => {
-    const result = passVerifier("ASDkGHJKL0");
+  describe("Game Of life simulator", () => {
+  it(" alive and has 3 neighbours", () => {
+    const result = simulateGeneration(cell1);
     expect(result).toBe(true);
   });
-});
+  it(" alive and has 2 neighbours", () => {
+    const result = simulateGeneration(cell2);
+    expect(result).toBe(true);
+  });
+  it(" alive and has 4 neighbours", () => {
+    const result = simulateGeneration(cell3);
+    expect(result).toBe(true);
+  });
+  it(" dead and has 3 neighbours", () => {
+    const result = simulateGeneration(cell4);
+    expect(result).toBe(true);
+  });
+  it(" dead and has 4 neighbours", () => {
+    const result = simulateGeneration(cell5);
+    expect(result).toBe(false);
+   });
+ });
+
+  
